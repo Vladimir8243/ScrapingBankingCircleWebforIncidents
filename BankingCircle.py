@@ -35,7 +35,7 @@ class BankingCircle:
                                                     incident_date_parse[16].split(">")[1].split("<")[0],
                                                     str(datetime.now()).split(" ")[0].split("-")[0]])
                     return self.incident_detected[0]
-#making valid fotmat for Slack
+#prepare a valid format for Slack
 def prepare_notification_for_slack(data):
     slack_message = {'text': data, 'Attachment': "Notification! "}
     req = requests.post(HOOK_URL, json.dumps(slack_message))
@@ -44,7 +44,6 @@ def sending_incident_notificarion(data):
     if data != None:
         results = pd.DataFrame(data).T.rename(columns={0:"Status", 1:"Month", 2:"Date", 3:"Time", 4:"Year"})
         prepare_notification_for_slack(f"<!subteam******> BankingCircle Incident Notification {nl}{results}")
-
     else:
         prepare_notification_for_slack(f"<!subteam******> BankingCircle Incident Notification {nl} No Incidens Found")
 #executing the script
